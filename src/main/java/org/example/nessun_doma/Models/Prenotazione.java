@@ -1,9 +1,7 @@
 package org.example.nessun_doma.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
@@ -13,9 +11,19 @@ import java.util.Date;
 public class Prenotazione {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int utente_id;
-    private int corso_id;
-    private Date data_prenotazione;
+
+    @ManyToOne
+    @JoinColumn(name= "utente_id", nullable = false)
+    @JsonBackReference
+    private Utente utente;
+
+    @ManyToOne
+    @JoinColumn(name= "corso_id", nullable = false)
+    @JsonBackReference
+    private Corso corso;
+
+    @Column(name = "dataPrenotazione", nullable = false)
+    private Date dataPrenotazione;
 }

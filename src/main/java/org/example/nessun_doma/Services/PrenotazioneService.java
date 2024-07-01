@@ -21,7 +21,7 @@ public class PrenotazioneService {
     }
 
     public List<Prenotazione> getAllPrenotazioni() {
-        return (List<Prenotazione>) prenotazioneRepository.findAll();
+        return prenotazioneRepository.findAll();
     }
 
     public Prenotazione getPrenotazioneById(int id) {

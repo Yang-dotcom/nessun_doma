@@ -1,7 +1,9 @@
 package org.example.nessun_doma.Controllers;
 
 import org.example.nessun_doma.Models.Corso;
+import org.example.nessun_doma.Models.Prenotazione;
 import org.example.nessun_doma.Services.CorsoService;
+import org.example.nessun_doma.Services.PrenotazioneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,25 +14,25 @@ import java.util.List;
 @RequestMapping("/prenotazioni")
 public class PrenotazioneController {
     @Autowired
-    private CorsoService corsoService;
+    private PrenotazioneService prenotazioneService;
 
     @PostMapping
-    public Corso createCorso(@RequestBody Corso corso) {
-        return corsoService.createCorso(corso);
+    public Prenotazione createPrenotazione(@RequestBody Prenotazione prenotazione) {
+        return prenotazioneService.createPrenotazione(prenotazione);
     }
 
     @GetMapping
-    public List<Corso> getAllCorsi() {
-        return corsoService.getAllCorsi();
+    public List<Prenotazione> getAllCorsi() {
+        return prenotazioneService.getAllPrenotazioni();
     }
 
     @GetMapping("/{id}")
-    public Corso getCorsoById(@PathVariable Integer id) {
-        return corsoService.getCorsoById(id);
+    public Prenotazione getPrenotazioneById(@PathVariable Integer id) {
+        return prenotazioneService.getPrenotazioneById(id);
     }
 
     @DeleteMapping("/{id}")
     public void deleteCorso(@PathVariable Integer id) {
-        corsoService.deleteCorso(id);
+        prenotazioneService.deletePrenotazione(id);
     }
 }

@@ -1,17 +1,22 @@
 package org.example.nessun_doma.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 public class Utente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String nome;
@@ -19,4 +24,9 @@ public class Utente {
     private String email;
     private String password;
     private String ruolo;
+
+    @OneToMany(mappedBy = "utente", fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Prenotazione> prenotazioni = new ArrayList<>();
+
 }

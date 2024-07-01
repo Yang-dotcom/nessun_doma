@@ -1,7 +1,9 @@
 package org.example.nessun_doma.Services;
 
 
+import org.example.nessun_doma.Models.Corso;
 import org.example.nessun_doma.Models.Prenotazione;
+import org.example.nessun_doma.Models.Utente;
 import org.example.nessun_doma.Services.Repositories.PrenotazioneRepository;
 import org.example.nessun_doma.Services.Repositories.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,10 @@ public class PrenotazioneService {
 
     public void deletePrenotazione(int id) {
         prenotazioneRepository.deleteById(id);
+    }
+
+    public List<Corso> findCorsiByUtente(Utente utente) {
+        return prenotazioneRepository.findDistinctCorsoByUtente(utente);
     }
 
 

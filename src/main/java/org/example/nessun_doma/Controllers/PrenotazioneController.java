@@ -2,6 +2,7 @@ package org.example.nessun_doma.Controllers;
 
 import org.example.nessun_doma.Models.Corso;
 import org.example.nessun_doma.Models.Prenotazione;
+import org.example.nessun_doma.Models.Utente;
 import org.example.nessun_doma.Services.CorsoService;
 import org.example.nessun_doma.Services.PrenotazioneService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,13 @@ public class PrenotazioneController {
     @DeleteMapping("/{id}")
     public void deleteCorso(@PathVariable Integer id) {
         prenotazioneService.deletePrenotazione(id);
+    }
+
+
+    @GetMapping("/corsi/{utente_id}")
+    public List<Corso> getEntityBsByEntityA(@PathVariable Long utente_id) {
+        Utente utente = new Utente();
+        utente.setId(Math.toIntExact(utente_id));
+        return prenotazioneService.findCorsiByUtente(utente);
     }
 }

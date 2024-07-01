@@ -1,6 +1,7 @@
 package org.example.nessun_doma.Models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
@@ -25,7 +26,7 @@ public class Utente {
     private String password;
     private String ruolo;
 
-    @OneToMany(mappedBy = "utente", fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "utente", fetch= FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Prenotazione> prenotazioni = new ArrayList<>();
 

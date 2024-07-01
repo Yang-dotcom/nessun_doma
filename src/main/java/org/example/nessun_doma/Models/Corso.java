@@ -2,6 +2,7 @@ package org.example.nessun_doma.Models;
 
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
@@ -31,7 +32,7 @@ public class Corso {
     @Column(name = "max_partecipanti", nullable = false)
     private int maxPartecipanti;
 
-    @OneToMany(mappedBy = "corso", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "corso", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Prenotazione> prenotazioni = new ArrayList<>();
 

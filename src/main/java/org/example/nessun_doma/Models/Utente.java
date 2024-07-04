@@ -10,11 +10,12 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Entity
 @Data
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-
 public class Utente {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +25,25 @@ public class Utente {
     private String cognome;
     private String email;
     private String password;
-    private String ruolo;
+
+    @Enumerated(EnumType.STRING)
+    private Ruolo ruolo;
+
+    @PostLoad
+    private void postLoad() {
+        // Convert the role to uppercase after loading from the database
+        if (this.ruolo != null) {
+            this.ruolo = Ruolo.valueOf(this.ruolo.name().toUpperCase());
+        }
+    }
 
     @OneToMany(mappedBy = "utente", fetch= FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference(value = "utente-prenota")
     private List<Prenotazione> prenotazioni = new ArrayList<>();
+
+
+    //@OneToMany(mappedBy = "istruttore", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //private List<Corso> istruttoreCorsi;
+
 
 }

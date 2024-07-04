@@ -37,11 +37,4 @@ public class PrenotazioneController {
         prenotazioneService.deletePrenotazione(id);
     }
 
-
-    @GetMapping("/corsi/{utente_id}")
-    public List<Corso> getEntityBsByEntityA(@PathVariable Long utente_id) {
-        Utente utente = new Utente();
-        utente.setId(Math.toIntExact(utente_id));
-        return prenotazioneService.findCorsiByUtente(utente);
-    }
 }

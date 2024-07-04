@@ -17,13 +17,13 @@ public class Prenotazione implements Serializable {
     private int id;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value = "utente-prenota")
     @JoinColumn(name= "utente_id", nullable = false, referencedColumnName = "id")
 
     private Utente utente;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value = "corso-prenotato")
     @JoinColumn(name= "corso_id", nullable = false)
 
     private Corso corso;

@@ -23,8 +23,10 @@ public class Corso {
     private int id;
     private String nome;
 
+    //@ManyToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(name = "istruttore_id", nullable = false, referencedColumnName = "id")
     @Column(name = "istruttore_id", nullable = false)
-    private int istruttoreId;
+    private int istruttore_id;
     @Column(name = "data_inizio", nullable = false)
     private Date dataInizio;
     @Column(name = "data_fine", nullable = false)
@@ -33,7 +35,7 @@ public class Corso {
     private int maxPartecipanti;
 
     @OneToMany(mappedBy = "corso", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference(value = "corso-prenotato")
     private List<Prenotazione> prenotazioni = new ArrayList<>();
 
 

@@ -2,6 +2,7 @@ package org.example.nessun_doma.Controllers;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.nessun_doma.Models.Corso;
 import org.example.nessun_doma.Models.Utente;
 import org.example.nessun_doma.Services.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +47,12 @@ public class UtenteController {
     @DeleteMapping("/{id}")
     public void deleteUtente(@PathVariable int id) {
         utenteService.deleteUtente(id);
+    }
+
+    @GetMapping("/corsi/{utente_id}")
+    public List<Corso> getCorsiByUtente(@PathVariable Long utente_id) {
+        Utente utente = new Utente();
+        utente.setId(Math.toIntExact(utente_id));
+        return utenteService.findCorsiByUtente(utente);
     }
 }

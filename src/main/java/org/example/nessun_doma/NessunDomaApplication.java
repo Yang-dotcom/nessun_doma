@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EntityScan("org.example.nessun_doma.Models")
-@EnableJpaRepositories("org.example.nessun_doma.Services.Repositories")
+//@EnableJpaRepositories("org.example.nessun_doma.Services.Repositories")
 
 public class NessunDomaApplication {
 

@@ -1,11 +1,8 @@
 package org.example.nessun_doma.Services;
 
 
-import org.example.nessun_doma.Models.Corso;
 import org.example.nessun_doma.Models.Prenotazione;
-import org.example.nessun_doma.Models.Utente;
-import org.example.nessun_doma.Services.Repositories.PrenotazioneRepository;
-import org.example.nessun_doma.Services.Repositories.UtenteRepository;
+import org.example.nessun_doma.Repositories.PrenotazioneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
@@ -15,6 +12,7 @@ import java.util.List;
 @Service
 @ComponentScan(basePackageClasses= PrenotazioneRepository.class)
 public class PrenotazioneService {
+
     @Autowired
     private PrenotazioneRepository prenotazioneRepository;
 
@@ -33,15 +31,5 @@ public class PrenotazioneService {
     public void deletePrenotazione(int id) {
         prenotazioneRepository.deleteById(id);
     }
-
-    public List<Corso> findCorsiByUtente(Utente utente) {
-        return prenotazioneRepository.findDistinctCorsoByUtente(utente);
-    }
-
-
-
-
-
-
-
 }
+

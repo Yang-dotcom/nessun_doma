@@ -1,12 +1,10 @@
 package org.example.nessun_doma.Services;
 
 
-import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.example.nessun_doma.Models.Prenotazione;
+import org.example.nessun_doma.Models.Corso;
 import org.example.nessun_doma.Models.Utente;
-import org.example.nessun_doma.Services.Repositories.PrenotazioneRepository;
-import org.example.nessun_doma.Services.Repositories.UtenteRepository;
+import org.example.nessun_doma.Repositories.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
@@ -21,8 +19,7 @@ public class UtenteService {
 
     @Autowired
     private UtenteRepository utenteRepository;
-    @Autowired
-    private PrenotazioneRepository prenotazioneRepository;
+
 
 
     public List<Utente> getAllUtenti() {
@@ -60,4 +57,9 @@ public class UtenteService {
         Optional<Utente> utente = utenteRepository.findById(id);
         utente.ifPresent(utenteRepository::delete);
     }
+
+    public List<Corso> findCorsiByUtente(Utente utente) {
+        return utenteRepository.findDistinctCorsoByUtente(utente);
+    }
+
 }

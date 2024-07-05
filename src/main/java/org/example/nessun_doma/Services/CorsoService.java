@@ -30,7 +30,7 @@ public class CorsoService {
                             .orElseThrow(() -> new UtenteNotFoundException(utenteId));
 
         if(istruttore.getRuolo() != Ruolo.ISTRUTTORE){
-            throw new InvalidRuoloException();
+            throw new InvalidRuoloException("solo gli istruttori possono modificare i corsi");
         }
 
 

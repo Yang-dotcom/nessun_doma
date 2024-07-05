@@ -18,8 +18,8 @@ public class PrenotazioneController {
     private PrenotazioneService prenotazioneService;
 
     @PostMapping
-    public Prenotazione createPrenotazione(@RequestBody Prenotazione prenotazione) {
-        return prenotazioneService.createPrenotazione(prenotazione);
+    public Prenotazione createPrenotazione(@RequestBody Prenotazione prenotazione, @RequestParam int utenteid) {
+        return prenotazioneService.upsertPrenotazione(prenotazione, utenteid);
     }
 
     @GetMapping
@@ -33,8 +33,8 @@ public class PrenotazioneController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCorso(@PathVariable Integer id) {
-        prenotazioneService.deletePrenotazione(id);
+    public void deleteCorso(@PathVariable Integer id, @RequestParam int utenteid) {
+        prenotazioneService.deletePrenotazione(id, utenteid);
     }
 
 }

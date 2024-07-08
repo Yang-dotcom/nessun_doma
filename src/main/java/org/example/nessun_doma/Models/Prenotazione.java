@@ -16,13 +16,13 @@ public class Prenotazione implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference(value = "utente-prenota")
     @JoinColumn(name= "utente_id", nullable = false, referencedColumnName = "id")
 
     private Utente utente;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference(value = "corso-prenotato")
     @JoinColumn(name= "corso_id", nullable = false)
 

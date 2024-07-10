@@ -1,8 +1,8 @@
 package org.example.nessun_doma.Services;
 
-import org.example.nessun_doma.Configurations.CorsoNotFoundException;
-import org.example.nessun_doma.Configurations.InvalidRuoloException;
-import org.example.nessun_doma.Configurations.UtenteNotFoundException;
+import org.example.nessun_doma.Exceptions.CorsoNotFoundException;
+import org.example.nessun_doma.Exceptions.InvalidRuoloException;
+import org.example.nessun_doma.Exceptions.UtenteNotFoundException;
 import org.example.nessun_doma.Models.Corso;
 import org.example.nessun_doma.Models.Ruolo;
 import org.example.nessun_doma.Models.Utente;

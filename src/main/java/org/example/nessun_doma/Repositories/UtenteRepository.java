@@ -22,4 +22,6 @@ public interface UtenteRepository extends CrudRepository<Utente, Long> {
 
     @Query("SELECT DISTINCT p.corso FROM Prenotazione p WHERE p.utente = :utente")
     List<Corso> findDistinctCorsoByUtente(@Param("utente") Utente utente);
+
+    Optional<Utente> findByEmail(String email);
 }

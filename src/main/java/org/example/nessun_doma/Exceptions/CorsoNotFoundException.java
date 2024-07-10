@@ -1,4 +1,4 @@
-package org.example.nessun_doma.Configurations;
+package org.example.nessun_doma.Exceptions;
 
 public class CorsoNotFoundException extends RuntimeException {
 

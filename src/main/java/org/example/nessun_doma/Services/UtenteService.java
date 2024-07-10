@@ -1,12 +1,16 @@
 package org.example.nessun_doma.Services;
 
 
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.example.nessun_doma.Exceptions.DuplicateException;
 import org.example.nessun_doma.Models.Corso;
+import org.example.nessun_doma.Models.SignupRequest;
 import org.example.nessun_doma.Models.Utente;
 import org.example.nessun_doma.Repositories.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,10 +19,13 @@ import java.util.Optional;
 @Service
 @ComponentScan(basePackageClasses= UtenteRepository.class)
 @Slf4j
+@Transactional()
 public class UtenteService {
 
     @Autowired
     private UtenteRepository utenteRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
 
@@ -60,6 +67,21 @@ public class UtenteService {
 
     public List<Corso> findCorsiByUtente(Utente utente) {
         return utenteRepository.findDistinctCorsoByUtente(utente);
+    }
+
+    @Transactional
+    public void signup(SignupRequest request) {
+        String email = request.getEmail();
+        Optional<Utente> existingUser = utenteRepository.findByEmail(email);
+        if (existingUser.isPresent()) {
+            throw new DuplicateException(String.format("User with the email address '%s' already exists.", email));
+        }
+
+        //TODO implement hashed password
+        String hashedPassword = passwordEncoder.encode(request.getPassword());
+        Utente user = Utente.builder().email(request.getEmail()).nome(request.getName()).cognome(request.getSurName())
+                .ruolo(request.getRole()).password(hashedPassword).build();
+        utenteRepository.save(user);
     }
 
 }

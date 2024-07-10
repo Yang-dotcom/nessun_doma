@@ -1,8 +1,8 @@
 package org.example.nessun_doma.Services;
 
 
-import org.example.nessun_doma.Configurations.InvalidRuoloException;
-import org.example.nessun_doma.Configurations.UtenteNotFoundException;
+import org.example.nessun_doma.Exceptions.InvalidRuoloException;
+import org.example.nessun_doma.Exceptions.UtenteNotFoundException;
 import org.example.nessun_doma.Models.Prenotazione;
 import org.example.nessun_doma.Models.Ruolo;
 import org.example.nessun_doma.Models.Utente;
@@ -28,9 +28,16 @@ public class PrenotazioneService {
         Utente cliente = utenteRepository.findById(utenteId)
                 .orElseThrow(() -> new UtenteNotFoundException(utenteId));
 
-        if(cliente.getRuolo() != Ruolo.CLIENTE || utenteId != prenotazioneRepository.findById(utenteId).get().getUtente().getId()){
-            throw new InvalidRuoloException("solo i clienti possono modificare le prenotazioni o il cliente non può modificare la prenotazione di un altro cliente");
+        Prenotazione temp = prenotazioneRepository.findById(utenteId).orElse(null);
+        int tempId = 0;
+        if (temp != null) {
+            tempId = temp.getUtente().getId();
+        }else{
+            prenotazioneRepository.save(prenotazione);
         }
+//        if (cliente.getRuolo() != Ruolo.CLIENTE || utenteId != tempId) {
+//            throw new InvalidRuoloException("solo i clienti possono modificare le prenotazioni o il cliente non può modificare la prenotazione di un altro cliente");
+//        }
         return prenotazioneRepository.save(prenotazione);
     }
 

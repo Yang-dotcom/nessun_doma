@@ -5,16 +5,30 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
 @Entity
 @Data
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Utente {
+@Builder
+@NoArgsConstructor
+@Slf4j
+@AllArgsConstructor
+public class Utente{
 
 
     @Id
@@ -29,6 +43,7 @@ public class Utente {
     @Enumerated(EnumType.STRING)
     private Ruolo ruolo;
 
+
     @PostLoad
     private void postLoad() {
         // Convert the role to uppercase after loading from the database
@@ -40,6 +55,7 @@ public class Utente {
     @OneToMany(mappedBy = "utente", fetch= FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference(value = "utente-prenota")
     private List<Prenotazione> prenotazioni = new ArrayList<>();
+
 
 
     //@OneToMany(mappedBy = "istruttore", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

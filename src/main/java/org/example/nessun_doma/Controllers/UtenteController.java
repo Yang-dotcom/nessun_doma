@@ -28,13 +28,13 @@ public class UtenteController {
     }
 
     @PutMapping
-    public Utente updateUtente(@RequestBody Utente utente) {
-        return utenteService.createUtente(utente);
+    public Utente updateUtente(@RequestBody Utente utente, @RequestHeader("Authorization") String authToken) {
+        return utenteService.updateUtente(utente,extractEmailFromToken(authToken));
     }
 
     @PatchMapping
-    public Utente patchUtente(@RequestBody Utente utente) {
-        return utenteService.createUtente(utente);
+    public Utente patchUtente(@RequestBody Utente utente, @RequestHeader("Authorization") String authToken) {
+        return utenteService.updateUtente(utente, extractEmailFromToken(authToken));
     }
 
     @GetMapping
@@ -49,7 +49,6 @@ public class UtenteController {
 
     @DeleteMapping("/{id}")
     public void deleteUtente(@PathVariable int id, @RequestHeader("Authorization") String authToken) {
-        log.info(authToken + "xXXX");
         utenteService.deleteUtente(id, extractEmailFromToken(authToken));
     }
 
@@ -66,9 +65,7 @@ public class UtenteController {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
             username = JwtHelper.extractUsername(token);
-            log.info("token: " + token);
         }
-        log.info("username: " + username);
         return username;
     }
 }

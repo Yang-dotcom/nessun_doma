@@ -26,11 +26,11 @@ public class CorsoService {
     private UtenteRepository utenteRepository;
 
 
-    public Corso upSertCorso(Corso corso, int utenteId) throws UtenteNotFoundException, InvalidRuoloException {
-        Utente istruttore = utenteRepository.findById(utenteId)
-                            .orElseThrow(() -> new UtenteNotFoundException(utenteId));
+    public Corso upsertCorso(Corso corso, String email) throws UtenteNotFoundException, InvalidRuoloException {
+        Utente istruttore = utenteRepository.findById(corso.getId())
+                            .orElseThrow(() -> new UtenteNotFoundException());
 
-        if(!isSameUser(istruttore, utenteId)){
+        if(!isSameUser(istruttore, email)){
             throw new DeniedPermissionException();
         }
         return corsoRepository.save(corso);
@@ -46,11 +46,12 @@ public class CorsoService {
                 () -> new CorsoNotFoundException(id));
     }
 
-    public void deleteCorso(int idCorso, int utenteId) {
-        Utente istruttore = utenteRepository.findById(utenteId)
-                .orElseThrow(() -> new UtenteNotFoundException(utenteId));
+    public void deleteCorso(int idCorso, String email) {
+        Corso temp = corsoRepository.findById(idCorso).orElseThrow(() -> new CorsoNotFoundException(idCorso));
+        Utente istruttore = utenteRepository.findById(temp.getIstruttore_id())
+                .orElseThrow(() -> new UtenteNotFoundException());
 
-        if(!isSameUser(istruttore, utenteId)){
+        if(!isSameUser(istruttore, email)){
             throw new DeniedPermissionException();
         }
         corsoRepository.deleteById(idCorso);
@@ -60,11 +61,10 @@ public class CorsoService {
         return corsoRepository.findDistinctUtenteByCorso(corso);
     }
 
-    private boolean isSameUser(Utente utente, int utenteid){
-        if(utente.getId() == utenteid){
+    private boolean isSameUser(Utente utente, String email){
+        if(utente.getEmail().equals(email)){
             return true;
         }
         return false;
     }
-
 }

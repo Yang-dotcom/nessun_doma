@@ -62,12 +62,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 CustomUserDetails temp = (CustomUserDetails) userDetails;
                 Utente utente = temp.getUtente();
-                if (!isPasswordEncoded(utente.getPassword())) {
-                    // Encode the raw password
-                    utente.setPassword(bCryptPasswordEncoder.encode(utente.getPassword()));
-                    // Save the encoded password back to the database
-                    utenteRepository.save(utente);
-                }
                 log.info("username role: " + userDetails.getAuthorities().toString());
                 if (JwtHelper.validateToken(token, userDetails)) {
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null,userDetails.getAuthorities());

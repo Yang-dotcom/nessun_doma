@@ -57,7 +57,15 @@ public class UtenteService {
 //        utenteRepository.deleteById(id);
 //    }
 
-    public Utente createUtente(Utente utente) {
+    public Utente updateUtente(Utente utente, String email) {
+        Utente temp = utenteRepository.findById(utente.getId()).orElseThrow(null);
+
+        if(temp !=  null && !isSameUser(temp, email)) throw new DeniedPermissionException();
+
+        return utenteRepository.save(utente);
+    }
+
+    public Utente createUtente(Utente utente){
         return utenteRepository.save(utente);
     }
 

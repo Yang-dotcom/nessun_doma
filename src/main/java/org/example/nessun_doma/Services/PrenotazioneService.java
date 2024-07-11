@@ -3,6 +3,7 @@ package org.example.nessun_doma.Services;
 
 import org.example.nessun_doma.Exceptions.DeniedPermissionException;
 import org.example.nessun_doma.Exceptions.InvalidRuoloException;
+import org.example.nessun_doma.Exceptions.NoPrenotazioneFoundException;
 import org.example.nessun_doma.Exceptions.UtenteNotFoundException;
 import org.example.nessun_doma.Models.Prenotazione;
 import org.example.nessun_doma.Models.Enums.Ruolo;
@@ -25,15 +26,16 @@ public class PrenotazioneService {
     @Autowired
     private UtenteRepository utenteRepository;
 
-    public Prenotazione upsertPrenotazione(Prenotazione prenotazione,int utenteId)throws UtenteNotFoundException, DeniedPermissionException {
-        Utente cliente = utenteRepository.findById(utenteId)
-                .orElseThrow(() -> new UtenteNotFoundException(utenteId));
-        if(!isSameUser(cliente, utenteId)){
+    public Prenotazione upsertPrenotazione(Prenotazione prenotazione,String email)throws  DeniedPermissionException {
+        Utente utente = utenteRepository.findById(prenotazione.getId())
+                .orElseThrow(() -> new UtenteNotFoundException());
+
+        if(!isSameUser(utente, email)){
             throw new DeniedPermissionException();
         }
-
         return prenotazioneRepository.save(prenotazione);
     }
+
 
     public List<Prenotazione> getAllPrenotazioni() {
         return prenotazioneRepository.findAll();
@@ -43,19 +45,19 @@ public class PrenotazioneService {
         return prenotazioneRepository.findById(id).orElse(null);
     }
 
-    public void deletePrenotazione(int id, int utenteId) {
+    public void deletePrenotazione(int id, String email) {
 
-        Utente cliente = utenteRepository.findById(utenteId)
-                .orElseThrow(() -> new UtenteNotFoundException(utenteId));
-        if(!isSameUser(cliente, utenteId)){
+        Prenotazione prenotazione = prenotazioneRepository.findById(id)
+                .orElseThrow(() -> new NoPrenotazioneFoundException());
+        if(!isSameUser(prenotazione.getUtente(), email)){
             throw new DeniedPermissionException();
         }
         prenotazioneRepository.deleteById(id);
     }
 
 
-    private boolean isSameUser(Utente utente, int utenteid){
-        if(utente.getId() == utenteid){
+    private boolean isSameUser(Utente utente, String email){
+        if(utente.getEmail().equals(email)){
             return true;
         }
         return false;

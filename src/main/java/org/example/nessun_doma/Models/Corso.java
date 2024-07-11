@@ -38,7 +38,4 @@ public class Corso {
     @JsonManagedReference(value = "corso-prenotato")
     private List<Prenotazione> prenotazioni = new ArrayList<>();
 
-
-
-
 }

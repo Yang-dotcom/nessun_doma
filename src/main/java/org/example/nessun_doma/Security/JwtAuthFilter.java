@@ -5,9 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.example.nessun_doma.Exceptions.AccessDeniedException;
 import org.example.nessun_doma.Exceptions.ApiErrorResponse;
+import org.example.nessun_doma.Models.SecurityModels.CustomUserDetails;
 import org.example.nessun_doma.Models.Utente;
-import org.example.nessun_doma.Services.UserDetailsService;
+import org.example.nessun_doma.Repositories.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.support.CustomSQLErrorCodesTranslation;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -30,6 +33,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    PasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    UtenteRepository utenteRepository;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
@@ -51,14 +60,20 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 //       If any accessToken is present, then it will validate the token and then authenticate the request in security context
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                CustomUserDetails temp = (CustomUserDetails) userDetails;
+                Utente utente = temp.getUtente();
+                if (!isPasswordEncoded(utente.getPassword())) {
+                    // Encode the raw password
+                    utente.setPassword(bCryptPasswordEncoder.encode(utente.getPassword()));
+                    // Save the encoded password back to the database
+                    utenteRepository.save(utente);
+                }
                 log.info("username role: " + userDetails.getAuthorities().toString());
                 if (JwtHelper.validateToken(token, userDetails)) {
-                    log.info("validation Successful");
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null,userDetails.getAuthorities());
                     authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }
-                log.info("validation  NOT Successful");
             }
 
             filterChain.doFilter(request, response);
@@ -75,5 +90,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         } catch (Exception e) {
             return "failed serialization"; // Return an empty string if serialization fails
         }
+    }
+
+    private boolean isPasswordEncoded(String password) {
+        // Check if the password is already encoded (assuming BCrypt encoded passwords start with $2a or $2b)
+        return password.startsWith("$2a$") || password.startsWith("$2b$");
     }
 }

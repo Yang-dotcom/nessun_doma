@@ -4,6 +4,7 @@ package org.example.nessun_doma.Controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.example.nessun_doma.Models.Corso;
 import org.example.nessun_doma.Models.Utente;
+import org.example.nessun_doma.Security.JwtHelper;
 import org.example.nessun_doma.Services.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +13,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/utenti")
-
+@Slf4j
 public class UtenteController {
 
 
     @Autowired
     private UtenteService utenteService;
+    @Autowired
+    private JwtHelper jwtHelper;
 
     @PostMapping
     public Utente createUtente(@RequestBody Utente utente) {
@@ -45,8 +48,9 @@ public class UtenteController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUtente(@PathVariable int id) {
-        utenteService.deleteUtente(id);
+    public void deleteUtente(@PathVariable int id, @RequestHeader("Authorization") String authToken) {
+        log.info(authToken + "xXXX");
+        utenteService.deleteUtente(id, extractEmailFromToken(authToken));
     }
 
     @GetMapping("/corsi/{utente_id}")
@@ -54,5 +58,17 @@ public class UtenteController {
         Utente utente = new Utente();
         utente.setId(Math.toIntExact(utente_id));
         return utenteService.findCorsiByUtente(utente);
+    }
+
+    private String extractEmailFromToken(String authHeader){
+        String token = null;
+        String username = null;
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            token = authHeader.substring(7);
+            username = JwtHelper.extractUsername(token);
+            log.info("token: " + token);
+        }
+        log.info("username: " + username);
+        return username;
     }
 }

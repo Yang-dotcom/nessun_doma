@@ -3,9 +3,11 @@ package org.example.nessun_doma.Services;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.example.nessun_doma.Exceptions.DeniedPermissionException;
 import org.example.nessun_doma.Exceptions.DuplicateException;
+import org.example.nessun_doma.Exceptions.UtenteNotFoundException;
 import org.example.nessun_doma.Models.Corso;
-import org.example.nessun_doma.Models.SignupRequest;
+import org.example.nessun_doma.Models.SecurityModels.SignupRequest;
 import org.example.nessun_doma.Models.Utente;
 import org.example.nessun_doma.Repositories.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,6 @@ public class UtenteService {
     private UtenteRepository utenteRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-
 
 
     public List<Utente> getAllUtenti() {
@@ -60,9 +61,13 @@ public class UtenteService {
         return utenteRepository.save(utente);
     }
 
-    public void deleteUtente(int id) {
-        Optional<Utente> utente = utenteRepository.findById(id);
-        utente.ifPresent(utenteRepository::delete);
+
+    public void deleteUtente(int id, String email) {
+        Utente utente = utenteRepository.findById(id).orElseThrow(() -> new UtenteNotFoundException(id));
+
+        if(!isSameUser(utente, email)) throw new DeniedPermissionException();
+
+        utenteRepository.deleteById(id);
     }
 
     public List<Corso> findCorsiByUtente(Utente utente) {
@@ -82,6 +87,17 @@ public class UtenteService {
         Utente user = Utente.builder().email(request.getEmail()).nome(request.getName()).cognome(request.getSurName())
                 .ruolo(request.getRole()).password(hashedPassword).build();
         utenteRepository.save(user);
+    }
+
+    public Utente findUserByEmail(String email){
+        return utenteRepository.findByEmail(email).orElseThrow(() -> new UtenteNotFoundException());
+    }
+
+    private boolean isSameUser(Utente utente, String email){
+        if(utente.getEmail().equals(email)){
+            return true;
+        }
+        return false;
     }
 
 }

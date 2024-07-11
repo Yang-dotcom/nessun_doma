@@ -1,4 +1,4 @@
-package org.example.nessun_doma.Models;
+package org.example.nessun_doma.Models.SecurityModels;
 
 
 import lombok.Data;
@@ -6,10 +6,12 @@ import lombok.Data;
 @Data
 public class LoginResponse {
 
+    private int id;
     String email;
     String token;
 
-    public LoginResponse(String email, String token) {
+    public LoginResponse(int id, String email, String token) {
+        this.id = id;
         this.email = email;
         this.token = token;
     }

@@ -1,10 +1,11 @@
 package org.example.nessun_doma.Services;
 
 
+import org.example.nessun_doma.Exceptions.DeniedPermissionException;
 import org.example.nessun_doma.Exceptions.InvalidRuoloException;
 import org.example.nessun_doma.Exceptions.UtenteNotFoundException;
 import org.example.nessun_doma.Models.Prenotazione;
-import org.example.nessun_doma.Models.Ruolo;
+import org.example.nessun_doma.Models.Enums.Ruolo;
 import org.example.nessun_doma.Models.Utente;
 import org.example.nessun_doma.Repositories.PrenotazioneRepository;
 import org.example.nessun_doma.Repositories.UtenteRepository;
@@ -24,20 +25,13 @@ public class PrenotazioneService {
     @Autowired
     private UtenteRepository utenteRepository;
 
-    public Prenotazione upsertPrenotazione(Prenotazione prenotazione,int utenteId)throws UtenteNotFoundException, InvalidRuoloException {
+    public Prenotazione upsertPrenotazione(Prenotazione prenotazione,int utenteId)throws UtenteNotFoundException, DeniedPermissionException {
         Utente cliente = utenteRepository.findById(utenteId)
                 .orElseThrow(() -> new UtenteNotFoundException(utenteId));
-
-        Prenotazione temp = prenotazioneRepository.findById(utenteId).orElse(null);
-        int tempId = 0;
-        if (temp != null) {
-            tempId = temp.getUtente().getId();
-        }else{
-            prenotazioneRepository.save(prenotazione);
+        if(!isSameUser(cliente, utenteId)){
+            throw new DeniedPermissionException();
         }
-//        if (cliente.getRuolo() != Ruolo.CLIENTE || utenteId != tempId) {
-//            throw new InvalidRuoloException("solo i clienti possono modificare le prenotazioni o il cliente non può modificare la prenotazione di un altro cliente");
-//        }
+
         return prenotazioneRepository.save(prenotazione);
     }
 
@@ -53,12 +47,18 @@ public class PrenotazioneService {
 
         Utente cliente = utenteRepository.findById(utenteId)
                 .orElseThrow(() -> new UtenteNotFoundException(utenteId));
-
-        if(cliente.getRuolo() != Ruolo.CLIENTE  ||
-                utenteId != prenotazioneRepository.findById(id).get().getUtente().getId()){
-            throw new InvalidRuoloException("solo i clienti possono modificare le prenotazioni o il cliente non può modificare la prenotazione di un altro cliente");
+        if(!isSameUser(cliente, utenteId)){
+            throw new DeniedPermissionException();
         }
         prenotazioneRepository.deleteById(id);
+    }
+
+
+    private boolean isSameUser(Utente utente, int utenteid){
+        if(utente.getId() == utenteid){
+            return true;
+        }
+        return false;
     }
 }
 

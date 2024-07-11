@@ -1,20 +1,27 @@
-package org.example.nessun_doma.Models;
+package org.example.nessun_doma.Models.SecurityModels;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.example.nessun_doma.Models.Utente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @Data
-
 public class CustomUserDetails implements UserDetails {
 
-    private final Utente utente;
+
+
+    private Utente utente;
+
+
 
 
     public CustomUserDetails(Utente utente) {

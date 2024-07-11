@@ -1,10 +1,11 @@
 package org.example.nessun_doma.Services;
 
 import org.example.nessun_doma.Exceptions.CorsoNotFoundException;
+import org.example.nessun_doma.Exceptions.DeniedPermissionException;
 import org.example.nessun_doma.Exceptions.InvalidRuoloException;
 import org.example.nessun_doma.Exceptions.UtenteNotFoundException;
 import org.example.nessun_doma.Models.Corso;
-import org.example.nessun_doma.Models.Ruolo;
+import org.example.nessun_doma.Models.Enums.Ruolo;
 import org.example.nessun_doma.Models.Utente;
 import org.example.nessun_doma.Repositories.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,18 +30,16 @@ public class CorsoService {
         Utente istruttore = utenteRepository.findById(utenteId)
                             .orElseThrow(() -> new UtenteNotFoundException(utenteId));
 
-        if(istruttore.getRuolo() != Ruolo.ISTRUTTORE){
-            throw new InvalidRuoloException("solo gli istruttori possono modificare i corsi");
+        if(!isSameUser(istruttore, utenteId)){
+            throw new DeniedPermissionException();
         }
-
-
         return corsoRepository.save(corso);
-
     }
 
     public List<Corso> getAllCorsi() {
         return corsoRepository.findAll();
     }
+
 
     public Corso getCorsoById(int id) {
         return corsoRepository.findById(id).orElseThrow(
@@ -48,14 +47,11 @@ public class CorsoService {
     }
 
     public void deleteCorso(int idCorso, int utenteId) {
-
-
-
         Utente istruttore = utenteRepository.findById(utenteId)
                 .orElseThrow(() -> new UtenteNotFoundException(utenteId));
 
-        if(istruttore.getRuolo() != Ruolo.ISTRUTTORE){
-            throw new InvalidRuoloException();
+        if(!isSameUser(istruttore, utenteId)){
+            throw new DeniedPermissionException();
         }
         corsoRepository.deleteById(idCorso);
     }
@@ -63,4 +59,12 @@ public class CorsoService {
     public List<Utente> findUtentiByCorso(Corso corso) {
         return corsoRepository.findDistinctUtenteByCorso(corso);
     }
+
+    private boolean isSameUser(Utente utente, int utenteid){
+        if(utente.getId() == utenteid){
+            return true;
+        }
+        return false;
+    }
+
 }

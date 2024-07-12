@@ -12,12 +12,12 @@ import org.example.nessun_doma.Models.Enums.Ruolo;
 public class SignupRequest {
 
     @NotBlank(message = "Name cannot be blank")
-    String name;
+    String nome;
     @NotBlank(message = "surname cannot be blank")
-    String surName;
+    String cognome;
 
     @Enumerated(EnumType.STRING)
-    private Ruolo role;
+    private Ruolo ruolo;
 
     @Email(message = "Invalid email format")
     @NotBlank(message = "Email cannot be blank")

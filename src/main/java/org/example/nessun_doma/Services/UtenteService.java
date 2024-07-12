@@ -92,8 +92,8 @@ public class UtenteService {
 
         //TODO implement hashed password
         String hashedPassword = passwordEncoder.encode(request.getPassword());
-        Utente user = Utente.builder().email(request.getEmail()).nome(request.getName()).cognome(request.getSurName())
-                .ruolo(request.getRole()).password(hashedPassword).build();
+        Utente user = Utente.builder().email(request.getEmail()).nome(request.getNome()).cognome(request.getCognome())
+                .ruolo(request.getRuolo()).password(hashedPassword).build();
         utenteRepository.save(user);
     }
 

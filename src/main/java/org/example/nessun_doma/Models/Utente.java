@@ -3,7 +3,9 @@ package org.example.nessun_doma.Models;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,14 +31,18 @@ public class Utente{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotBlank
     private String nome;
+    @NotBlank
     private String cognome;
+    @NotBlank(message = "must choose an istructor")
     private String email;
+    @NotBlank
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @Nonnull
     private Ruolo ruolo;
-
 
     @PostLoad
     private void postLoad() {

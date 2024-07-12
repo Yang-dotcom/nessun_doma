@@ -27,7 +27,7 @@ public class PrenotazioneService {
     private UtenteRepository utenteRepository;
 
     public Prenotazione upsertPrenotazione(Prenotazione prenotazione,String email)throws  DeniedPermissionException {
-        Utente utente = utenteRepository.findById(prenotazione.getId())
+        Utente utente = utenteRepository.findById(prenotazione.getUtente().getId())
                 .orElseThrow(() -> new UtenteNotFoundException());
 
         if(!isSameUser(utente, email)){

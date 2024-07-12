@@ -27,7 +27,7 @@ public class CorsoService {
 
 
     public Corso upsertCorso(Corso corso, String email) throws UtenteNotFoundException, InvalidRuoloException {
-        Utente istruttore = utenteRepository.findById(corso.getId())
+        Utente istruttore = utenteRepository.findById(corso.getIstruttore_id())
                             .orElseThrow(() -> new UtenteNotFoundException());
 
         if(!isSameUser(istruttore, email)){

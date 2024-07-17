@@ -38,4 +38,6 @@ public class AuthController {
         int userId = utenteService.findUserByEmail(request.getEmail()).getId();
         return ResponseEntity.ok(new LoginResponse(userId, request.getEmail(), token));
     }
+
+
 }

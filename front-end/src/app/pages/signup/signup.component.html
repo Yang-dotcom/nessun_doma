@@ -1,0 +1,21 @@
+<div class="signup-card">
+  <div class="card-title">
+    <h1>Create Account</h1>
+    <span>Already have an account? <a routerLink="/login">Sign In</a></span>
+  </div>
+  <form class="form-group" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <input type="text" name="nome" placeholder="Name" formControlName="nome">
+    <input type="text" name="cognome" placeholder="Surname" formControlName="cognome">
+    <!-- <input type="text" name="ruolo" placeholder="Role" formControlName="ruolo"> -->
+    <form class = "tendina" action="#" >
+      <select name="ruolo" formControlName="ruolo" required>
+        <option value="" disabled selected value style="display:none">Select a role</option>
+        <option value="ISTRUTTORE">Istruttore</option>
+        <option value="CLIENTE">Cliente</option>
+      </select>
+    </form>
+    <input type="email" name="email" placeholder="Email" formControlName="email">
+    <input type="password" name="password" placeholder="Password" formControlName="password">
+    <button > Signup </button>
+  </form>
+</div>

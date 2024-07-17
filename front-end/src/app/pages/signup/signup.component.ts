@@ -18,7 +18,7 @@ export class SignupComponent {
   public signupForm = new FormGroup({
     nome: new FormControl('', [Validators.required]),
     cognome: new FormControl('', [Validators.required]),
-    ruolo: new FormControl('', [Validators.required]),
+    ruolo: new FormControl('CLIENTE', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   })

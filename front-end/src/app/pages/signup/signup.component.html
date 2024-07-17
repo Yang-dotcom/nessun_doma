@@ -6,13 +6,11 @@
   <form class="form-group" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <input type="text" name="nome" placeholder="Name" formControlName="nome">
     <input type="text" name="cognome" placeholder="Surname" formControlName="cognome">
-    <!-- <input type="text" name="ruolo" placeholder="Role" formControlName="ruolo"> -->
-    <form class = "tendina" action="#" >
-      <select name="ruolo" formControlName="ruolo" required>
-        <option value="" disabled selected value style="display:none">Select a role</option>
-        <option value="ISTRUTTORE">Istruttore</option>
-        <option value="CLIENTE">Cliente</option>
-      </select>
+    <form class="tendina" action="#">
+        <select name="ruolo" formControlName="ruolo" required>
+          <option value="ISTRUTTORE">Istruttore</option>
+          <option value="CLIENTE" selected>Cliente</option>
+        </select>
     </form>
     <input type="email" name="email" placeholder="Email" formControlName="email">
     <input type="password" name="password" placeholder="Password" formControlName="password">

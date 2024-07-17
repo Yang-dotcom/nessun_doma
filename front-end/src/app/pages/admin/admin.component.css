@@ -3,14 +3,17 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: rgba(253, 101, 133, 1);
+  background-color: #D5C7BC;
 }
 
 button {
-  padding: 20px;
-  background-color: rgba(60, 10, 107, 0.562);
-  border-radius: 10px;
-  border: 0;
+  background-color: #4796ff;
+  color: #ffffff;
+  font-size: 16px;
   outline: none;
+  border-radius: 5px;
+  border: none;
+  padding: 8px 15px;
+  height: 10%;
   width: 300px;
 }

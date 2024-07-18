@@ -5,4 +5,8 @@ public class CorsoNotFoundException extends RuntimeException {
     public CorsoNotFoundException(int id){
         super("Corso con id "+ id + " non trovato");
     }
+
+    public CorsoNotFoundException() {
+
+    }
 }

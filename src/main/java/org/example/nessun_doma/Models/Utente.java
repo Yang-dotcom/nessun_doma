@@ -19,7 +19,7 @@ import java.util.List;
 
 @Entity
 @Data
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(scope= Utente.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Builder
 @NoArgsConstructor
 @Slf4j

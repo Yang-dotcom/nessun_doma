@@ -46,6 +46,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/corsi/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/prenotazioni/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/utenti/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/corsi/istruttore").hasAuthority(Ruolo.ISTRUTTORE.name())
+                        .requestMatchers(HttpMethod.GET, "/prenotazioni/utente").hasAuthority(Ruolo.CLIENTE.name())
 
                         .requestMatchers(HttpMethod.POST, "/utenti/**").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/utenti/**").permitAll()

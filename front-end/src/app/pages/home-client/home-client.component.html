@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palestra XYZ</title>
+  <link rel="stylesheet" href="home-client.component.css">
+</head>
+<body>
+<header>
+  <div class="logo">Palestra XYZ</div>
+  <nav class="navBar">
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Corsi</a></li>
+      <li><a href="#">Prenotazioni</a></li>
+      <li><a href="#">Contatti</a></li>
+      <li><a href="#">Login/Registrazione</a></li>
+    </ul>
+  </nav>
+</header>
+<section class="hero">
+  <h1>Benvenuti alla Palestra XYZ</h1>
+  <p>Il tuo benessere, la nostra missione</p>
+  <button>Scopri di più</button>
+</section>
+<section class="corsi-disponibili">
+  <h2>Corsi Disponibili</h2>
+  <div class="corsi-grid">
+    <!-- Esempio di carta corso -->
+    <div class="corso-card">
+      <img src="yoga.jpg" alt="Yoga">
+      <h3>Yoga</h3>
+      <p>Rilassa la mente e il corpo con le nostre lezioni di yoga.</p>
+      <button>Prenota Ora</button>
+    </div>
+    <!-- Altri corsi... -->
+  </div>
+</section>
+<section class="corsi-prenotati">
+  <h2>I Tuoi Corsi Prenotati</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Nome del corso</th>
+      <th>Data e Ora</th>
+      <th>Istruttore</th>
+      <th>Stato</th>
+      <th>Azioni</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Esempio di riga corso prenotato -->
+    <tr>
+      <td>Yoga</td>
+      <td>20 Luglio 2024, 18:00</td>
+      <td>Maria Rossi</td>
+      <td>Confermato</td>
+      <td><button>Annulla</button></td>
+    </tr>
+    <!-- Altri corsi prenotati... -->
+    </tbody>
+  </table>
+</section>
+<section class="prenotazione-corsi">
+  <h2>Prenota un Corso</h2>
+  <form>
+    <label for="corso">Seleziona il corso:</label>
+    <select id="corso" name="corso">
+      <option value="yoga">Yoga</option>
+      <option value="pilates">Pilates</option>
+      <!-- Altri corsi... -->
+    </select>
+    <label for="data">Seleziona la data e l'ora:</label>
+    <input type="datetime-local" id="data" name="data">
+    <button type="submit">Prenota</button>
+  </form>
+</section>
+<footer>
+  <div class="links">
+    <a href="#">Termini e Condizioni</a>
+    <a href="#">Privacy Policy</a>
+    <a href="#">FAQ</a>
+  </div>
+  <div class="contatti">
+    <p>Indirizzo: Via Roma, 1, Torino</p>
+    <p>Telefono: 0123 456789</p>
+    <p>Email: info.palestraxyz.it</p>
+  </div>
+  <div class="social">
+    <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
+    <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
+    <!-- Altri social... -->
+  </div>
+</footer>
+</body>
+</html>

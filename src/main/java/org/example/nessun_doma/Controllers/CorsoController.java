@@ -47,6 +47,16 @@ public class CorsoController {
         return corsoService.getAllCorsi();
     }
 
+    @GetMapping("/available")
+    public List<Corso> getAvailableCoursi(){
+        return corsoService.getHasFreeSpotsCourses();
+    }
+
+    @GetMapping("/istruttore")
+    public List<Corso> getAllIstruttoreCorsi(@RequestHeader("Authorization") String authToken) {
+        return corsoService.getAllIstruttoreCorsi(extractEmailFromToken(authToken));
+    }
+
     @GetMapping("/{id}")
     public Corso getCorsoById(@PathVariable Integer id) {
         return corsoService.getCorsoById(id);

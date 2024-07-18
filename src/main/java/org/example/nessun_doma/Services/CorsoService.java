@@ -13,6 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 import org.example.nessun_doma.Repositories.CorsoRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,18 +28,46 @@ public class CorsoService {
 
 
     public Corso upsertCorso(Corso corso, String email) throws UtenteNotFoundException, InvalidRuoloException {
-        Utente istruttore = utenteRepository.findById(corso.getIstruttore_id())
+
+        Utente istruttore = utenteRepository.findByEmail(email)
                             .orElseThrow(() -> new UtenteNotFoundException());
 
         if(!isSameUser(istruttore, email)){
             throw new DeniedPermissionException();
         }
+
+        corso.setAvailableSpots(corso.getMaxPartecipanti());
+        corso.setIstruttore_id(istruttore.getId());
         return corsoRepository.save(corso);
     }
 
     public List<Corso> getAllCorsi() {
         return corsoRepository.findAll();
     }
+
+
+    public List<Corso> getAllIstruttoreCorsi(String email){
+        Utente utente = utenteRepository.findByEmail(email).orElseThrow(() -> new UtenteNotFoundException());
+        if(!isSameUser(utente, email)){throw new DeniedPermissionException();}
+
+        List<Corso> corsi = corsoRepository.findcorsiByUtente(utente.getId());
+
+        for(Corso corso: corsi){
+            if(corso.getDataFine().isBefore(LocalDateTime.now())){
+                corsoRepository.deleteById(corso.getId());
+            }
+        }
+        return corsoRepository.findcorsiByUtente(utente.getId());
+    }
+
+    public List<Corso> getHasFreeSpotsCourses(){
+        List<Corso> corsi = corsoRepository.findAll();
+
+        return corsi.stream().filter(x -> x.getAvailableSpots() > 0).toList();
+
+    }
+
+
 
 
     public Corso getCorsoById(int id) {

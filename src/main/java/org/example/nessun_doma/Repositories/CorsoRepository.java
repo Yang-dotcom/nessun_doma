@@ -1,6 +1,7 @@
 package org.example.nessun_doma.Repositories;
 
 import org.example.nessun_doma.Models.Corso;
+import org.example.nessun_doma.Models.Prenotazione;
 import org.example.nessun_doma.Models.Utente;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -23,6 +24,12 @@ public interface CorsoRepository extends CrudRepository<Corso, Integer> {
 
     @Query("SELECT DISTINCT p.utente FROM Prenotazione p WHERE p.corso = :corso")
     List<Utente> findDistinctUtenteByCorso(@Param("corso") Corso corso);
+
+    @Query("SELECT c FROM Corso c WHERE c.istruttore_id = :istruttore_id")
+    List<Corso> findcorsiByUtente(@Param("istruttore_id") int istruttore_id);
+
+
+
 
 
 }

@@ -38,6 +38,11 @@ public class PrenotazioneController {
         return prenotazioneService.getAllPrenotazioni();
     }
 
+    @GetMapping("/utente")
+    public List<Prenotazione> getAllUtentePrenotazioni(@RequestHeader("Authorization") String authToken) {
+        return prenotazioneService.getAllUtentePrenotazioni(extractEmailFromToken(authToken));
+    }
+
     @GetMapping("/{id}")
     public Prenotazione getPrenotazioneById(@PathVariable Integer id) {
         return prenotazioneService.getPrenotazioneById(id);
@@ -47,6 +52,8 @@ public class PrenotazioneController {
     public void deleteCorso(@PathVariable Integer id, @RequestHeader("Authorization") String authToken) {
         prenotazioneService.deletePrenotazione(id, extractEmailFromToken(authToken));
     }
+
+
 
     private String extractEmailFromToken(String authHeader){
         String token = null;

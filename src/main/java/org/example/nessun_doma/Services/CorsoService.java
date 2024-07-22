@@ -41,6 +41,10 @@ public class CorsoService {
         return corsoRepository.save(corso);
     }
 
+    public Corso upsertCorso(Corso corso){
+        return corsoRepository.save(corso);
+    }
+
     public List<Corso> getAllCorsi() {
         return corsoRepository.findAll();
     }
@@ -63,7 +67,8 @@ public class CorsoService {
     public List<Corso> getHasFreeSpotsCourses(){
         List<Corso> corsi = corsoRepository.findAll();
 
-        return corsi.stream().filter(x -> x.getAvailableSpots() > 0).toList();
+        // TODO: handle null cases, show only courses which are valid date wise
+        return corsi.stream().filter(x -> x.getAvailableSpots() != null && x.getAvailableSpots() > 0).toList();
 
     }
 
@@ -95,5 +100,13 @@ public class CorsoService {
             return true;
         }
         return false;
+    }
+
+
+
+    public Corso findCorsoByName(String corsoName) {
+        return corsoRepository.findByNome(corsoName).orElseThrow(
+                () -> new CorsoNotFoundException(corsoName));
+
     }
 }

@@ -5,6 +5,7 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { authGuard } from './auth/auth.guard';
 import {HomeClientComponent} from "./pages/home-client/home-client.component";
 import {HomeInstructorComponent} from "./pages/home-instructor/home-instructor.component";
+import {PrenotazioniComponent} from "./pages/prenotazioni/prenotazioni.component";
 
 export const routes: Routes = [
 
@@ -26,6 +27,9 @@ export const routes: Routes = [
 
   {
     path: 'admin', component: AdminComponent, canActivate: [authGuard]
+  },
+  {
+    path:'prenotazioni', component: PrenotazioniComponent
   }
 
 

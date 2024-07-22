@@ -9,4 +9,8 @@ public class CorsoNotFoundException extends RuntimeException {
     public CorsoNotFoundException() {
 
     }
+
+    public CorsoNotFoundException(String corsoName) {
+        super("Corso con nome "+ corsoName + " non trovato");
+    }
 }

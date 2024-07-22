@@ -1,0 +1,273 @@
+
+/* Global Styles */
+
+* {
+  box-sizing: border-box;
+}
+
+:host {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: whitesmoke;
+}
+
+body {
+  margin: 0;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #333;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header Styles */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+header h1 {
+  font-size: 2em;
+  color: #1a1a1a;
+}
+
+/* New Booking Section */
+.new-booking {
+  margin-bottom: 40px;
+}
+
+.new-booking h2 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: #1a1a1a;
+}
+
+.new-booking label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.new-booking input[type="datetime-local"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.new-booking button {
+  display: block;
+  width: auto;
+  padding: 12px 24px; /* Increased padding for a bigger button */
+  border: none;
+  border-radius: 4px;
+  background-color: #4a4a4a; /* Darker, less vibrant blue */
+  color: #ffffff;
+  font-size: 1.1em; /* Slightly larger font size */
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 0 auto;
+}
+
+.new-booking button:hover {
+  background-color: #333333; /* Darker hover effect */
+}
+
+/* Bookings List Section */
+.bookings-list {
+  margin-bottom: 40px;
+}
+
+.bookings-list h2 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: #1a1a1a;
+}
+
+.bookings-list table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.bookings-list th, .bookings-list td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.bookings-list th {
+  background-color: #f1f1f1;
+  font-weight: bold;
+}
+
+.bookings-list tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.bookings-list button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #ff4d4d;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.bookings-list button:hover {
+  background-color: #d41f1f;
+}
+
+/* Area Personale Section */
+.area-personale {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  text-align: center;
+}
+
+.area-personale h1 {
+  font-size: 1.2em; /* Smaller font size */
+}
+
+.area-personale a {
+  text-decoration: none;
+  color: #4a4a4a; /* Darker, less vibrant blue */
+  font-size: 1.2em; /* Adjusted font size */
+  transition: color 0.3s;
+}
+
+.area-personale a:hover {
+  color: #333333; /* Darker hover effect */
+}
+
+
+/*
+:host {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #D5C7BC;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: rgba(255,255, 255, 0.85);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 30%;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-left: 30px;
+  margin-top: 20px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+  color: #444;
+}
+
+.new-booking{
+  padding: 10px;
+  margin-left: 50px;
+
+}
+
+bookings-list {
+  margin-bottom: 20px;
+  padding: 10px;
+
+}
+
+.new-booking h2, .bookings-list h2 {
+  font-size: 20px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+form {
+  flex-direction: column;
+  gap: 10px;
+  display: flex;
+
+}
+
+form input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: grid;
+}
+
+form button {
+
+  padding: 10px 20px;
+  border: none;
+  background-color: #5c9ded;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+}
+
+form button:hover {
+  background-color: #4886cb;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  background-color: #fafafa;
+}
+
+table, th, td {
+  border:1px solid black;
+  padding: 5px;
+}
+
+table {
+"width: 100%"
+}
+*/

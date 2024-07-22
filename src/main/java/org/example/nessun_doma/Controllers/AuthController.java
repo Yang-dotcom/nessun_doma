@@ -39,8 +39,8 @@ public class AuthController {
             log.info("login method called");
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
             String token = JwtHelper.generateToken(request.getEmail());
-            int userId = utenteService.findUserByEmail(request.getEmail()).getId();
-            return ResponseEntity.ok(new LoginResponse(userId, request.getEmail(), token));
+            Utente utente = utenteService.findUserByEmail(request.getEmail());
+            return ResponseEntity.ok(new LoginResponse(utente.getId(), request.getEmail(), token, utente.getRuolo().name() ));
     }
 
 

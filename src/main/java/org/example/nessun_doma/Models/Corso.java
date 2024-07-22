@@ -33,11 +33,11 @@ public class Corso {
     private int istruttore_id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
-    @Column(name = "data_inizio", nullable = false)
+    @Column(name = "data_inizio")
     private LocalDateTime dataInizio;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
-    @Column(name = "data_fine", nullable = false)
+    @Column(name = "data_fine")
     private LocalDateTime dataFine;
 
     @Column(name = "max_partecipanti", nullable = false)
@@ -47,7 +47,10 @@ public class Corso {
     @JsonManagedReference(value = "corso-prenotato")
     private List<Prenotazione> prenotazioni = new ArrayList<>();
 
-    @Column(name = "posti_rimasti", nullable = false)
+    @Column(name = "posti_rimasti")
     private Integer availableSpots;
+
+    @Column(name = "img_src")
+    private String imgSrc;
 
 }

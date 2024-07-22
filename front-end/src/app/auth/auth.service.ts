@@ -18,15 +18,13 @@ export class AuthService {
   }
 
   login(data: any) {
-    console.log("ciao1")
     const headers = new HttpHeaders(({
       'Content-type': 'application/json'
     }))
+
     return this.httpClient.post(`${this.baseUrl}/auth/login`, data, { headers })
       .pipe(tap((result) => {
-        console.log("bbb")
-        console.log(JSON.stringify(result));
-        console.log(result);
+        console.log("successful Login")
         localStorage.setItem('authUser', JSON.stringify(result));
       }))
   }

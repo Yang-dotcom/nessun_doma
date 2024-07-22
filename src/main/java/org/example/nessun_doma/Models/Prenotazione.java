@@ -6,21 +6,22 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonIdentityInfo(scope = Prenotazione.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Prenotazione implements Serializable {
-
-    public Prenotazione() {
-
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

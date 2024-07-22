@@ -1,9 +1,6 @@
 package org.example.nessun_doma.Controllers;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.example.nessun_doma.Models.Corso;
-import org.example.nessun_doma.Models.Prenotazione;
 import org.example.nessun_doma.Models.Utente;
 import org.example.nessun_doma.Security.JwtHelper;
 import org.example.nessun_doma.Services.CorsoService;

@@ -9,6 +9,8 @@ import org.example.nessun_doma.Models.Utente;
 import org.example.nessun_doma.Repositories.CorsoRepository;
 import org.example.nessun_doma.Repositories.PrenotazioneRepository;
 import org.example.nessun_doma.Repositories.UtenteRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import java.util.List;
 @ComponentScan(basePackageClasses= PrenotazioneRepository.class)
 public class PrenotazioneService {
 
+    private static final Logger log = LoggerFactory.getLogger(PrenotazioneService.class);
     @Autowired
     private PrenotazioneRepository prenotazioneRepository;
 
@@ -27,8 +30,12 @@ public class PrenotazioneService {
     private UtenteRepository utenteRepository;
     @Autowired
     private CorsoRepository corsoRepository;
+    @Autowired
+    private CorsoService corsoService;
 
     public Prenotazione upsertPrenotazione(Prenotazione prenotazione,String email)throws  DeniedPermissionException {
+
+        log.info("HELLO  " + prenotazione.getUtente().getEmail() + prenotazione.getCorso().getNome());
         Utente utente = utenteRepository.findById(prenotazione.getUtente().getId())
                 .orElseThrow(() -> new UtenteNotFoundException());
 
@@ -74,6 +81,9 @@ public class PrenotazioneService {
 
         Prenotazione prenotazione = prenotazioneRepository.findById(id)
                 .orElseThrow(() -> new NoPrenotazioneFoundException());
+        Corso corso = prenotazione.getCorso();
+        corso.setAvailableSpots(corso.getAvailableSpots()+1);
+        corsoService.upsertCorso(corso);
         if(!isSameUser(prenotazione.getUtente(), email)){
             throw new DeniedPermissionException();
         }

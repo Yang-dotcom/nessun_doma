@@ -9,11 +9,11 @@
 <body>
 <header>
   <div class="logo">Palestra XYZ</div>
-  <nav class="navBar">
+  <nav class="navBar" >
     <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Prenotazioni</a></li>
-      <li><a href="#">Login/Registrazione</a></li>
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/prenotazioni">Prenotazioni</a></li>
+        <button (click)="OnClick()">Logout</button>
     </ul>
   </nav>
 </header>
@@ -26,62 +26,41 @@
   <h2>Corsi Disponibili</h2>
   <div class="corsi-grid">
     <!-- Esempio di carta corso -->
+    @for(corso of corsiArray; track corso.id) {
+      <div class="corso-card">
+      <img [src]="corso.imgSrc" alt="{{corso.nome}}" width="300px" height="500px" priority/>
+        <h3>{{corso.nome}}</h3>
+      </div>
+    }
+
     <div class="corso-card">
-      <img src="yoga.jpg" alt="Yoga">
+      <img src="yoga.jpg" alt="yoga" width="300px" height="500px" />
       <h3>Yoga</h3>
-      <p>Rilassa la mente e il corpo con le nostre lezioni di yoga.</p>
-      <button>Scopri di più</button>
+    </div>
+    <div class="corso-card">
+      <img src="yoga.jpg" alt="yoga" width="300px" height="500px" />
+      <h3>Yoga</h3>
+    </div>
+    <div class="corso-card">
+      <img src="yoga.jpg" alt="yoga" width="300px" height="500px" />
+      <h3>Yoga</h3>
+    </div>
+    <div class="corso-card">
+      <img src="yoga.jpg" alt="yoga" width="300px" height="500px" />
+      <h3>Yoga</h3>
+    </div>
+    <div class="corso-card">
+      <img src="yoga.jpg" alt="yoga" width="300px" height="500px" />
+      <h3>Yoga</h3>
     </div>
 
     <div class="corso-card">
-      <img src="boxe.jpg" alt="Boxe">
-      <h3>Boxe</h3>
-      <p>Adrenalina con Boxe</p>
-      <button>Scopri di più</button>
+      <img src="yoga.jpg" alt="yoga" width="300px" height="500px" />
+      <h3>Yoga</h3>
     </div>
 
 
-    <!-- Altri corsi... -->
   </div>
-</section>
-<section class="corsi-prenotati">
-  <h2>I Tuoi Corsi Prenotati</h2>
-  <table>
-    <thead>
-    <tr>
-      <th>Nome del corso</th>
-      <th>Data e Ora</th>
-      <th>Istruttore</th>
-      <th>Stato</th>
-      <th>Azioni</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- Esempio di riga corso prenotato -->
-    <tr>
-      <td>Yoga</td>
-      <td>20 Luglio 2024, 18:00</td>
-      <td>Maria Rossi</td>
-      <td>Confermato</td>
-      <td><button>Annulla</button></td>
-    </tr>
-    <!-- Altri corsi prenotati... -->
-    </tbody>
-  </table>
-</section>
-<section class="prenotazione-corsi">
-  <h2>Prenota un Corso</h2>
-  <form>
-    <label for="corso">Seleziona il corso:</label>
-    <select id="corso" name="corso">
-      <option value="yoga">Yoga</option>
-      <option value="pilates">Pilates</option>
-      <!-- Altri corsi... -->
-    </select>
-    <label for="data">Seleziona la data e l'ora:</label>
-    <input type="datetime-local" id="data" name="data">
-    <button type="submit">Prenota</button>
-  </form>
 </section>
 </main>
 </body>

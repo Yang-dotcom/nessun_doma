@@ -29,7 +29,5 @@ public interface CorsoRepository extends CrudRepository<Corso, Integer> {
     List<Corso> findcorsiByUtente(@Param("istruttore_id") int istruttore_id);
 
 
-
-
-
+    Optional<Corso> findByNome(String corsoName);
 }

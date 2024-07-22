@@ -15,7 +15,6 @@ import {NONE_TYPE} from "@angular/compiler";
 export class LoginComponent {
   authService = inject(AuthService);
   router = inject(Router);
-  jsonObject: object = NONE_TYPE;
 
   protected loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -26,20 +25,31 @@ export class LoginComponent {
     console.log(this.loginForm.valid)
     if(this.loginForm.valid){
       console.log(this.loginForm.value);
-      console.log((this.authService.login(this.loginForm.value) + "ciao"));
       this.authService.login(this.loginForm.value)
-
-
         .subscribe((data: any) => {
           console.log(this.authService.isLoggedIn());
           if(this.authService.isLoggedIn()){
-            this.jsonObject = JSON.parse(localStorage.getItem('authUser')!);
+            const jsonObject = localStorage.getItem('authUser');
             //TODO
-            //if(this.jsonObject.ruolo)
 
-            this.router.navigate(['/admin']);
+            if (jsonObject) {
+              const retrievedUser = JSON.parse(jsonObject);
+              console.log(retrievedUser.ruolo);
+              if(retrievedUser.ruolo == "CLIENTE"){
+                this.router.navigate(['/home-client']);
+              }else if(retrievedUser.ruolo == "ISTRUTTORE"){
+                this.router.navigate(['/home-instructor']);
+              }
+              else [
+                console.log("The Role is not a valid one." +
+                  " Home page for entered role vailable")
+                ]
+            }
+
+            else{
+              console.log("Saved Login Object not correctly saved to local storage")
+            }
           }
-          console.log(data);
         });
 
     }

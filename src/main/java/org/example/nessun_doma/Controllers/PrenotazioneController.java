@@ -33,18 +33,21 @@ public class PrenotazioneController {
     private CorsoService corsoService;
 
     @PostMapping
-    public Prenotazione createPrenotazione(@RequestBody PrenotazioneDTO prenotazione,  @RequestHeader("Authorization") String authToken) {
-        return prenotazioneService.upsertPrenotazione(this.convertToEntiyDTO(prenotazione), extractEmailFromToken(authToken));
+    public PrenotazioneDTO createPrenotazione(@RequestBody PrenotazioneDTO prenotazione,  @RequestHeader("Authorization") String authToken) {
+        log.info(authToken+ "ciao");
+        log.info(prenotazione.getUtenteEmail()+ "ciao");
+        log.info(prenotazione.getDataPrenotazione()+ "ciao");
+        return convertToDTO(prenotazioneService.upsertPrenotazione(this.convertToEntiyDTO(prenotazione), extractEmailFromToken(authToken)));
     }
 
     @PutMapping
-    public Prenotazione updatePrenotazione(@RequestBody PrenotazioneDTO prenotazione,  @RequestHeader("Authorization") String authToken) {
-        return prenotazioneService.upsertPrenotazione(this.convertToEntiyDTO(prenotazione), extractEmailFromToken(authToken));
+    public PrenotazioneDTO updatePrenotazione(@RequestBody PrenotazioneDTO prenotazione,  @RequestHeader("Authorization") String authToken) {
+        return convertToDTO(prenotazioneService.upsertPrenotazione(this.convertToEntiyDTO(prenotazione), extractEmailFromToken(authToken)));
     }
 
     @PatchMapping
-    public Prenotazione patchPrenotazione(@RequestBody PrenotazioneDTO prenotazione,  @RequestHeader("Authorization") String authToken) {
-        return prenotazioneService.upsertPrenotazione(this.convertToEntiyDTO(prenotazione), extractEmailFromToken(authToken));
+    public PrenotazioneDTO patchPrenotazione(@RequestBody PrenotazioneDTO prenotazione,  @RequestHeader("Authorization") String authToken) {
+        return convertToDTO(prenotazioneService.upsertPrenotazione(this.convertToEntiyDTO(prenotazione), extractEmailFromToken(authToken)));
     }
 
     @GetMapping

@@ -1,1 +1,53 @@
-<p>home-instructor works!</p>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palestra XYZ</title>
+  <link rel="stylesheet" href="home-instructor.component.css">
+</head>
+<body>
+<header>
+  <div class="logo">Palestra XYZ</div>
+  <nav class="navBar" >
+    <ul>
+      <button (click)="OnClick()">Logout</button>
+    </ul>
+  </nav>
+</header>
+<main class="content">
+  <section class="hero">
+    <h1>Area Istruttore</h1>
+  </section>
+  <form id="bookingCard" [formGroup]="corsoForm" (ngSubmit)="addCorso()">
+    <input type = "datetime-local" id="data1" formControlName="dataInizio">
+    <input type = "datetime-local" id="data32" formControlName="dataFine">
+    <input type = "text" id="name" formControlName="nome" placeholder="nome corso">
+    <input type = "number" id="maxPartecipanti" formControlName="maxPartecipanti" palceholder="numero massimo partecipanti">
+    <input type = "text" id="imgSrc" formControlName="imgSrc" placeholder="path immagine">
+
+
+    <button type="submit">Aggiungi Corso</button>
+  </form>
+  <section class="corsi-disponibili">
+    <h2>Corsi Insegnati</h2>
+    <div class="corsi-grid">
+      <!-- Esempio di carta corso -->
+      @for(corso of corsiArray; track corso.id) {
+        <div class="corso-card">
+          <img [src]="corso.imgSrc" alt="{{corso.nome}}" width="300px" height="500px" priority/>
+          <h3>
+            <p>{{corso.nome}}</p>
+          </h3>
+          <h4>
+            <p>Numero massimo: {{corso.maxPartecipanti}}</p>
+            <p>Posti Rimasti: {{corso.availableSpots}}</p>
+          </h4>
+          <button type="button" (click)="deleteCorso( (corso.id) )" >Elimina</button>
+        </div>
+      }
+    </div>
+  </section>
+</main>
+</body>
+</html>

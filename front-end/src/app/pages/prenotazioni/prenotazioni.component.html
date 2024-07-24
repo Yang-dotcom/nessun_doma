@@ -1,57 +1,40 @@
 <div class="container">
   <div>
   <header>
-    <h1>User Name</h1>
+    <h1>{{userName}}</h1>
   </header>
   <section class="new-booking">
-    <h2>Add New Booking</h2>
+    <h2>Aggiungi Prenotazione</h2>
     <label for="data">Seleziona la data e l'ora:</label>
-    <form id="bookingCard" (ngSubmit)="addBooking()">
-      <input type = "datetime-local" id="data" name="data" [(ngModel)]="newBooking" name="bookingInput">
-     <!-- <label for="tendina">Seleziona il corso</label>
-      <form id="tendina" action="#">
-        <select name="corsi" formControlName="corsi" required>
-          &lt;!&ndash; Todo &ndash;&gt;
-          <option value="yoga">yoga</option>
-          <option value="boxe" selected>boxe</option>
+    <form id="bookingCard" [formGroup]="prenotazioneForm" (ngSubmit)="addPrenotazione()">
+      <input type = "datetime-local" id="data" formControlName="dataPrenotazione">
+      <form class="tendina" [formGroup]="prenotazioneForm" action="#">
+        <select name="corso" formControlName="corsoName" required>
+          @for(corso of corsiArray; track corso.id) {
+            <option value="{{corso.nome}}">{{corso.nome}}</option>
+          }
         </select>
-      </form>-->
-      <button type="submit">Add Booking</button>
+      </form>
+      <button type="submit">Aggiungi Prenotazione</button>
     </form>
   </section></div>
   <section class="bookings-list">
-    <h2>Your Bookings</h2>
+    <h2>Le tue Prenotazioni</h2>
     <table >
       <tr>
         <th>Corso</th>
         <th>Data</th>
       </tr>
-      <tr>
-        <td>yoga</td>
-        <td>10/04/2024 09:30</td>
-        <td><button>Annulla</button></td>
-      </tr>
-      <tr>
-        <td>Karate Course with updates</td>
-        <td>10/04/2024 09:30</td>
-        <td><button>Annulla</button></td>
-      </tr>
-      <tr>
-        <td>Karate Course with updates</td>
-        <td>10/04/2024 09:30</td>
-        <td><button>Annulla</button></td>
-      </tr>
-      @for(prenotazione of prenotazioniArray; track prenotazione.id){
-        <tr>
-          <td>{{prenotazione.corsoName}}</td>
-          <td>{{prenotazione.dataPrenotazione}}</td>
-          <td><button>Annulla</button></td>
+      @for(p of prenotazioniArray; track p.id ){
+        <tr >
+          <td>{{p.corsoName}}</td>
+          <td>{{p.dataPrenotazione}}</td>
+          <td>
+            <button type="button" (click)="deletePrenotazione( (p.id) )" >Annulla</button>
+          </td>
         </tr>
       }
     </table>
-    <ul>
-      <li *ngFor="let booking of bookings">{{ booking }}</li>
-    </ul>
   </section>
   <div class="area-personale">
     <h1><a routerLink="/home-client">Area Personale</a></h1>

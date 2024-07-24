@@ -24,6 +24,14 @@ export class PrenotazioniServiceService {
       'Authorization': `Bearer ${token}`  // Replace with your actual token
     });
     let options = { headers: headers };
+    console.info(headers.get('Authorization') + "Ciao")
    return this.HttpClient.post<Prenotazione>(`${this.baseUrl}`, body, options)
+  }
+
+  deletePrenotazione(token: string, id: number) {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`  // Replace with your actual token
+    });
+    return this.HttpClient.delete<null> (`${this.baseUrl}/${id}`, {headers});
   }
 }

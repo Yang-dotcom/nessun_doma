@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Corso} from "../../interfaces/corso";
 
 @Injectable({
@@ -17,10 +17,25 @@ export class CorsiServiceService {
   }
 
   createCourse(data: any, token:string){
-    let params = new HttpParams()
-                            .set('body', data)
-                            .set('token', token);
-    return this.HttpClient.post(`${this.baseUrl}`, params);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`  // Replace with your actual token
+    });
+    let options = { headers: headers };
+    return this.HttpClient.post<Corso>(`${this.baseUrl}`,data, options);
+  }
+
+  istruttoreCourses(token:string){
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`  // Replace with your actual token
+    });
+    return this.HttpClient.get<Corso[]>(`${this.baseUrl}/istruttore`, {headers})
+  }
+
+  deleteCourse(token:string, id:number){
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`  // Replace with your actual token
+    });
+    return this.HttpClient.delete<null> (`${this.baseUrl}/${id}`, {headers});
   }
 
 

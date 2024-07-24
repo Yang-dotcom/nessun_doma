@@ -1,6 +1,260 @@
-
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 /* Global Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  background-color: #f5f5f5;
+  display: flex;
+  min-width: 100vw;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Header Styles */
+header {
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.logo {
+  font-size: 1.5em;
+  font-weight: 700;
+  color: #4a90e2;
+}
+
+.navBar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navBar button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 15px 30px; /* Increased padding for larger button */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  font-size: 1.1em; /* Increased font size */
+}
+
+.navBar button:hover {
+  background-color: #357ab8;
+  transform: scale(1.05);
+}
+
+/* Main Content */
+.content {
+  width: 100%;
+  padding: 30px;
+  margin: 0 auto;
+  display: flex;
+  gap: 10%;
+  flex-direction: row;
+}
+
+.left-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 300px;
+}
+
+.hero {
+  margin-left: 0px; /* Bring Area Istruttore even closer to the left */
+}
+
+.hero h1 {
+  font-size: 2.5em;
+  color: #4a4a4a;
+}
+
+/* Form Styles */
+#bookingCard {
+  width: 100%;
+  max-width: 500px;
+  margin-left: 10px; /* Align form with Area Istruttore even closer */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#bookingCard input,
+#bookingCard button {
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 1em;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#bookingCard input:focus,
+#bookingCard button:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+#bookingCard button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#bookingCard h2{
+  text-align: center;
+  font-size: 2em;
+}
+
+#bookingCard button:hover {
+  background-color: #357ab8;
+}
+
+/* Courses Section */
+.corsi-disponibili {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.corsi-disponibili h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #4a4a4a;
+  font-weight: 700;
+}
+
+.corsi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  max-height: 500px; /* Fixed height for the grid */
+  white-space: nowrap;
+}
+
+.corsi-grid::-webkit-scrollbar {
+  height: 12px;
+}
+
+.corsi-grid::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 6px;
+}
+
+.corsi-grid::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}
+
+.corso-card {
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+}
+
+.corso-card img {
+  border-radius: 10px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.corso-card h3 p {
+  font-size: 1.5em;
+  font-weight: 500;
+  color: #4a4a4a;
+  margin-bottom: 10px;
+}
+
+.corso-card h4 p {
+  font-size: 1.2em;
+  color: #757575;
+  margin-bottom: 5px;
+}
+
+.corso-card button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.corso-card button:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}
+
+.description_field{
+  margin-bottom: 0px;
+  margin-top: 0.3em;
+  text-align: center;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navBar ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hero h1 {
+    font-size: 2em;
+  }
+
+  .corsi-disponibili h2 {
+    font-size: 1.5em;
+  }
+
+  .content {
+    flex-direction: column;
+  }
+
+  .left-section,
+  .corsi-disponibili {
+    width: 100%;
+  }
+
+  #bookingCard {
+    width: 100%;
+  }
+}
+
+
+
+/*
+!* Global Styles *!
 
 * {
   box-sizing: border-box;
@@ -24,7 +278,7 @@ body {
   background-color: #f9f9f9;
 }
 
-/* Header Styles */
+!* Header Styles *!
 header {
   display: flex;
   justify-content: space-between;
@@ -81,14 +335,14 @@ button:hover {
   background-color: #0056b3;
 }
 
-/* Main Content Styles */
+!* Main Content Styles *!
 main.content {
   padding: 40px 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-/* Hero Section */
+!* Hero Section *!
 .hero {
   text-align: center;
   margin-bottom: 2vh;
@@ -100,7 +354,7 @@ main.content {
 }
 
 
-/* Corsi Disponibili Section */
+!* Corsi Disponibili Section *!
 .corsi-disponibili {
   text-align: center;
   font-size: 1vw;
@@ -142,7 +396,7 @@ main.content {
   border-radius: 4px;
   margin-bottom: 15px;
   object-fit: cover;
-  max-height: 200px; /* Adjust height as needed */
+  max-height: 200px; !* Adjust height as needed *!
 }
 
 .corso-card h3 {
@@ -153,7 +407,7 @@ main.content {
 
 
 
-/*
+!*
 
 
 
@@ -271,4 +525,5 @@ button:hover {
 
 
 
+*!
 */

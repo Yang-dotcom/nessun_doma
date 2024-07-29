@@ -9,7 +9,7 @@ import {NgOptimizedImage} from "@angular/common";
 @Component({
   selector: 'app-home-client',
   standalone: true,
-  imports: [RouterLink, RouterOutlet, NgOptimizedImage],
+  imports: [RouterLink, RouterOutlet, NgOptimizedImage, NgOptimizedImage],
   templateUrl: './home-client.component.html',
   styleUrl: './home-client.component.css'
 })

@@ -4,14 +4,17 @@ import {Corso} from "../../interfaces/corso";
 import {AuthService} from "../../auth/auth.service";
 import {CorsiServiceService} from "../../services/corsiService/corsi-service.service";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {MatSnackBar} from "@angular/material/snack-bar";
 import {Prenotazione} from "../../interfaces/prenotazione";
+import {CommonModule, NgIf} from '@angular/common'; // Import CommonModule
 
 @Component({
   selector: 'app-home-instructor',
   standalone: true,
   imports: [
     RouterLink,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf
   ],
   templateUrl: './home-instructor.component.html',
   styleUrl: './home-instructor.component.css'
@@ -21,6 +24,9 @@ export class HomeInstructorComponent implements OnInit{
   authService = inject(AuthService);
   router = inject(Router);
   corsiService = inject(CorsiServiceService)
+  _snackBar = inject(MatSnackBar);
+  uploadedFilePath: string = '';
+  previewUrl: string | ArrayBuffer | null = null; // For image preview
 
 
   protected corsoForm = new FormGroup({
@@ -85,6 +91,28 @@ export class HomeInstructorComponent implements OnInit{
     }
     return null;
 
+  }
+
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewUrl = reader.result; // Set preview URL
+        this.uploadedFilePath = file.name; // Set the file path (name)
+        this.corsoForm.patchValue({ imgSrc: this.uploadedFilePath }); // Update form control
+        this._snackBar.open('File successfully uploaded!', 'Close', { duration: 2000 });
+      };
+      reader.readAsDataURL(file); // Read the file as a Data URL
+    }
+  }
+
+  onSubmit() {
+    if (this.corsoForm.valid) {
+      this.addCorso();
+    } else {
+      this._snackBar.open('Please fill all required fields.', 'Close', {duration: 2000});
+    }
   }
 
   ngOnInit(): void {

@@ -5,8 +5,17 @@ import org.example.nessun_doma.Models.Utente;
 import org.example.nessun_doma.Security.JwtHelper;
 import org.example.nessun_doma.Services.CorsoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 
@@ -14,6 +23,13 @@ import java.util.List;
 @RequestMapping("/corsi")
 
 public class CorsoController {
+
+
+    @Value("${file.upload-dir}")
+    private String uploadDir;
+
+    @Value("${file.final-dir}")
+    private String finalDir;
 
     private CorsoService corsoService;
 
@@ -80,4 +96,51 @@ public class CorsoController {
         }
         return username;
     }
+
+    @PostMapping("/upload")
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return new ResponseEntity<>("No file selected for upload.", HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            // Save file temporarily
+            Path tempPath = Paths.get(uploadDir + File.separator + file.getOriginalFilename());
+            Files.createDirectories(tempPath.getParent());
+            Files.write(tempPath, file.getBytes());
+
+            // Return the file path to the front-end
+            return new ResponseEntity<>(tempPath.toString(), HttpStatus.OK);
+        } catch (IOException e) {
+            return new ResponseEntity<>("Could not upload the file: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/submit")
+    public ResponseEntity<String> submitForm(@RequestParam("filePath") String filePath) {
+        try {
+            // Convert file path to Path object
+            Path tempPath = Paths.get(filePath);
+            Path finalPath = Paths.get(finalDir + File.separator + tempPath.getFileName());
+
+            // Ensure the final directory exists
+            Files.createDirectories(finalPath.getParent());
+
+            // Move the file to the final directory
+            Files.move(tempPath, finalPath);
+
+            // Delete the file from the upload directory after moving
+            Files.deleteIfExists(tempPath);
+
+            return new ResponseEntity<>("File moved successfully to " + finalPath.toString(), HttpStatus.OK);
+        } catch (IOException e) {
+            return new ResponseEntity<>("Could not move the file: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+
+
+
 }

@@ -1,6 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Corso} from "../../interfaces/corso";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,19 @@ export class CorsiServiceService {
     });
     return this.HttpClient.delete<null> (`${this.baseUrl}/${id}`, {headers});
   }
+
+  uploadFile(file: File): Observable<string> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+
+    return this.HttpClient.post(`${this.baseUrl}/upload`, formData, { responseType: 'text' });
+  }
+
+
+  submitForm(data: any): Observable<any> {
+    return this.HttpClient.post(`${this.baseUrl}/submit`, data);
+  }
+
 
 
 

@@ -31,10 +31,17 @@
     <input type = "number" id="maxPartecipanti" formControlName="maxPartecipanti" palceholder="numero massimo partecipanti">
     <label class = "description_field"> </label>
     <input type = "text" id="imgSrc" formControlName="imgSrc" placeholder="path immagine">
+    <input type="file" (change)="onFileChange($event)">
 
 
-    <button type="submit">Aggiungi Corso</button>
+    <button type="submit" >Aggiungi Corso</button>
   </form>
+  <section class="image-preview">
+    <h2>Anteprima Immagine</h2>
+    <div *ngIf="previewUrl">
+      <img [src]="previewUrl" alt="Preview" width="300px" height="300px">
+    </div>
+  </section>
   <section class="corsi-disponibili">
     <h2>Corsi Insegnati</h2>
     <div class="corsi-grid">

@@ -28,7 +28,8 @@
     @for(corso of corsiArray; track corso.id) {
       <div class="corso-card relative w-full h-64 ">
       <img  [ngSrc]="corso.imgSrc" alt="{{corso.nome}}" fill priority class="relative top-0 left-0 w-full h-full object-cover"/>
-        <h3 class="text-lg absolute bottom-0 left-0 w-full bg-cyan-50 bg-opacity-30 text-white p-2">{{corso.nome}}</h3>
+        <h3 class="text-lg absolute bottom-0 left-0 w-full bg-cyan-50 bg-opacity-30 text-white font-serif font-semibold p-2">{{corso.nome}}</h3>
+        <h1 class="text-lg relative bottom-0 left-0 w-full bg-cyan-50 bg-opacity-30 text-slate-700 font-serif font-semibold p-2">Codice istruttore: {{corso.istruttore_id}}</h1>
       </div>
     }
   </div>

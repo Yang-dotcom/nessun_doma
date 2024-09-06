@@ -7,7 +7,7 @@
     <h2>Aggiungi Prenotazione</h2>
     <label for="data">Seleziona la data e l'ora:</label>
     <form id="bookingCard" [formGroup]="prenotazioneForm" (ngSubmit)="addPrenotazione()">
-      <input type = "datetime-local" id="data" formControlName="dataPrenotazione">
+      <input type = "datetime-local" max="9999-12-31T23:59" id="data" formControlName="dataPrenotazione">
       <form class="tendina" [formGroup]="prenotazioneForm" action="#">
         <select name="corso" formControlName="corsoName" required>
           @for(corso of corsiArray; track corso.id) {
